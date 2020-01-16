@@ -3,6 +3,13 @@ import item from './item';
 const items = [];
 let hideCheckeditems = false;
 
+const findAndUpdate = function (id, newData){
+
+  const currentItem = this.findById(id);
+  const x = Object.assign(newData,this.findById(id));
+};
+
+
 const findById = function (id) {
   return this.items.find(currentItem => currentItem.id === id);
 };
@@ -43,5 +50,6 @@ export default {
   findAndToggleChecked,
   findAndUpdateName,
   findAndDelete,
-  toggleCheckedFilter
+  toggleCheckedFilter,
+  findAndUpdate
 };
