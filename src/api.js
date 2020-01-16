@@ -12,11 +12,11 @@ const createItem = function (name){
   });
 };
 function updateItem(id, updateData){
-  const updated = JSON.stringify(updateData);
+  const newData = JSON.stringify(updateData);
   return fetch(`${BASE_URL}/items/${id}`,{
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
-    body: updated
+    body: newData
   });
 }
 export default { 

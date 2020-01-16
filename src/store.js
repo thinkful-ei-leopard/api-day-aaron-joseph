@@ -1,13 +1,6 @@
-import item from './item';
 
 const items = [];
 let hideCheckeditems = false;
-
-const findAndUpdate = function (id, newData){
-
-  const currentItem = this.findById(id);
-  const x = Object.assign(newData,this.findById(id));
-};
 
 
 const findById = function (id) {
@@ -19,19 +12,10 @@ const addItem = function (item) {
   
 };
 
-const findAndToggleChecked = function (id) {
-  const currentItem = this.findById(id);
-  currentItem.checked = !currentItem.checked;
-};
 
-const findAndUpdateName = function (id, name) {
-  try {
-    item.validateName(name);
-    const currentItem = this.findById(id);
-    currentItem.name = name;
-  } catch (e) {
-    console.log('Cannot update name: ' + e.message);
-  }
+const findAndUpdate = function (id, newData){
+  const currentItem = this.findById(id);
+  Object.assign(currentItem,newData);
 };
 
 const findAndDelete = function (id) {
@@ -47,8 +31,6 @@ export default {
   hideCheckeditems,
   findById,
   addItem,
-  findAndToggleChecked,
-  findAndUpdateName,
   findAndDelete,
   toggleCheckedFilter,
   findAndUpdate
