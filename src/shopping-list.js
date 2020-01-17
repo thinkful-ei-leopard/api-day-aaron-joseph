@@ -51,13 +51,13 @@ const handleNewItemSubmit = function () {
     event.preventDefault();
     const newItemName = $('.js-shopping-list-entry').val();
     $('.js-shopping-list-entry').val('');
+
     api.createItem(newItemName)
       .then(res => res.json())
       .then((newItem) => {
         store.addItem(newItem);
         render();
       });
-    
   });
 };
 
@@ -84,19 +84,24 @@ const handleEditShoppingItemSubmit = function () {
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
     const itemName = $(event.currentTarget).find('.shopping-item').val();
-    render();
-  });
-};
-
-const handleEditShoppingItemSubmit = function () {
-  $('.js-shopping-list').on('submit', '.js-edit-item', event => {
-    event.preventDefault();
-    const id = getItemIdFromElement(event.currentTarget);
-    const itemName = $(event.currentTarget).find('.shopping-item').val();
     api.updateItem(id, { name: itemName })
       .then(() => {
         store.findAndUpdate(id, { name: itemName });
         render();
+      });
+  });
+};
+
+const handleItemCheckClicked = function () {
+  $('.js-shopping-list').on('click', '.js-item-toggle', event => {
+    const id = getItemIdFromElement(event.currentTarget);
+    const item = store.findById(id);
+
+    api.updateItem(id, { checked: !item.checked })
+      .then(() => {
+        store.findAndUpdate(id, { checked: !item.checked });
+        render();
+      });
   });
 };
 
@@ -114,7 +119,7 @@ const bindEventListeners = function () {
   handleEditShoppingItemSubmit();
   handleToggleFilterClick();
 };
-// This object contains the only exposed methods from this module:
+
 export default {
   render,
   bindEventListeners
