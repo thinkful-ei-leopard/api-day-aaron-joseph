@@ -88,10 +88,15 @@ const handleEditShoppingItemSubmit = function () {
   });
 };
 
-const handleItemCheckClicked = function () {
-  $('.js-shopping-list').on('click', '.js-item-toggle', event => {
+const handleEditShoppingItemSubmit = function () {
+  $('.js-shopping-list').on('submit', '.js-edit-item', event => {
+    event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
-    render();
+    const itemName = $(event.currentTarget).find('.shopping-item').val();
+    api.updateItem(id, { name: itemName })
+      .then(() => {
+        store.findAndUpdate(id, { name: itemName });
+        render();
   });
 };
 
